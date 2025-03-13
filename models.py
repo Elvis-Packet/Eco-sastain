@@ -11,8 +11,8 @@ class Collector(Base):
     __tablename__ = 'collectors'
     
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    contact_info = Column(String, nullable=False)
+    name = Column(String, )
+    contact_info = Column(String)
     gender = Column(String)
     collection_logs = relationship('CollectionLog', back_populates='collector', lazy='joined')
 
@@ -20,26 +20,26 @@ class RecyclingCenter(Base):
     __tablename__ = 'recycling_centers'
     
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    location = Column(String, nullable=False)
+    name = Column(String)
+    location = Column(String)
     collection_logs = relationship('CollectionLog', back_populates='recycling_center', lazy='joined')
 
 class WasteItem(Base):
     __tablename__ = 'waste_items'
     
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    category = Column(String, nullable=False)
-    weight = Column(Float, nullable=False)
+    name = Column(String)
+    category = Column(String)
+    weight = Column(Float)
     collection_logs = relationship('CollectionLog', back_populates='waste_item', lazy='joined')
 
 class CollectionLog(Base):
     __tablename__ = 'collection_logs'
     
     id = Column(Integer, primary_key=True)
-    collector_id = Column(Integer, ForeignKey('collectors.id'), nullable=False)
-    recycling_center_id = Column(Integer, ForeignKey('recycling_centers.id'), nullable=False)
-    waste_item_id = Column(Integer, ForeignKey('waste_items.id'), nullable=False)
+    collector_id = Column(Integer, ForeignKey('collectors.id'))
+    recycling_center_id = Column(Integer, ForeignKey('recycling_centers.id'))
+    waste_item_id = Column(Integer, ForeignKey('waste_items.id'))
     collection_date = Column(DateTime, default=datetime.utcnow)
 
     collector = relationship('Collector', back_populates='collection_logs', lazy='joined')
