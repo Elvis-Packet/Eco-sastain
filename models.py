@@ -13,8 +13,7 @@ class Collector(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, )
     contact_info = Column(String)
-    gender = Column(String)
-    collection_logs = relationship('CollectionLog', back_populates='collector', lazy='joined')
+    collection_logs = relationship('CollectionLog', back_populates='collector')
 
 class RecyclingCenter(Base):
     __tablename__ = 'recycling_centers'
@@ -22,7 +21,7 @@ class RecyclingCenter(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     location = Column(String)
-    collection_logs = relationship('CollectionLog', back_populates='recycling_center', lazy='joined')
+    collection_logs = relationship('CollectionLog', back_populates='recycling_center')
 
 class WasteItem(Base):
     __tablename__ = 'waste_items'
@@ -31,7 +30,7 @@ class WasteItem(Base):
     name = Column(String)
     category = Column(String)
     weight = Column(Float)
-    collection_logs = relationship('CollectionLog', back_populates='waste_item', lazy='joined')
+    collection_logs = relationship('CollectionLog', back_populates='waste_item')
 
 class CollectionLog(Base):
     __tablename__ = 'collection_logs'
@@ -42,9 +41,9 @@ class CollectionLog(Base):
     waste_item_id = Column(Integer, ForeignKey('waste_items.id'))
     collection_date = Column(DateTime, default=datetime.utcnow)
 
-    collector = relationship('Collector', back_populates='collection_logs', lazy='joined')
-    recycling_center = relationship('RecyclingCenter', back_populates='collection_logs', lazy='joined')
-    waste_item = relationship('WasteItem', back_populates='collection_logs', lazy='joined')
+    collector = relationship('Collector', back_populates='collection_logs')
+    recycling_center = relationship('RecyclingCenter', back_populates='collection_logs')
+    waste_item = relationship('WasteItem', back_populates='collection_logs')
 
 def create_tables():
     Base.metadata.create_all(bind=engine)
